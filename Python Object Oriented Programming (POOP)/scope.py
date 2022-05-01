@@ -3,7 +3,8 @@ def update_health(amount):
 
 health = 10
 print(health)
-
+update_health(20)
+print(health)
 
 
 class Hero:
