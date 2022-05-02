@@ -1,12 +1,17 @@
-#def add(a, b):
-#    return a + b
+'''Example how we can place functions as arguemnts for objects
 
-#class Test:
-#    def __init__(self, add_func):
-#        self.add_function = add_func
+def add(a, b):
+    return a + b
 
-#test = Test(add)
-#print(test.add_function(1, 5))
+class Test:
+    def __init__(self, add_func):
+        self.add_function = add_func
+
+test = Test(add)
+print(test.add_function(1, 5))'''
+
+
+#Example of placing methods as arguments for objects
 
 class Monster:
     def __init__(self, func):
