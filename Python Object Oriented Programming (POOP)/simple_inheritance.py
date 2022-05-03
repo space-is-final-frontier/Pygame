@@ -1,4 +1,4 @@
-#Example showing simple inheritance with static attributes
+#An example of simple inheritance with static attributes
 
 '''
 class Monster:

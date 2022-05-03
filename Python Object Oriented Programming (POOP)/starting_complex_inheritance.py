@@ -1,3 +1,5 @@
+#An example of a child class inheriting from two parent classes
+
 '''
 class Monster:
     def __init__(self, health, energy):

@@ -1,4 +1,4 @@
-#Example of local scope problem in functions
+#Local scope problem in functions
 
 '''
 def update_health(amount):
@@ -10,6 +10,7 @@ update_health(20)
 print(health)
 '''
 
+#This however will give an error
 
 #The above problem can be fixed by adding global keyword
 
@@ -19,8 +20,7 @@ def update_health(amount):
     health += amount
 '''
 
-
-#Example showing scope of classes is much easier and not local
+#This in a large code would get messy, so we would use classes which overcome this easily
 
 '''
 def update_health(amount):
@@ -36,7 +36,7 @@ update_health(20)
 print(monster.health)
 '''
 
-#example showing use of methods interchangably between classes to change attributes with no worry of scope
+#We can use methods interchangably between classes to change attributes with no worry of scope
 
 class Monster:
     def __init__(self, health):

@@ -1,5 +1,20 @@
-'''Example how we can place functions as arguemnts for objects
+#A function is just an object with the dunder call method
 
+'''
+def test():
+    pass
+
+a = test
+
+print(dir(a))
+print(dir(test)))
+'''
+
+#These two print statement will give the same output as we stored the test object into variable a turning a into an object
+
+#We can place functions as arguemnts for objects
+
+'''
 def add(a, b):
     return a + b
 
@@ -11,7 +26,7 @@ test = Test(add)
 print(test.add_function(1, 5))'''
 
 
-#Example of placing methods as arguments for objects
+#We can place methods as arguments for objects
 
 class Monster:
     def __init__(self, func):
