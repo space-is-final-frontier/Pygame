@@ -56,7 +56,7 @@ class Fish(Monster, Fish):
         #This here works on its own without giving any errors
 
 '''
-shark1 = Shark(50, 200, 100)
+shark1 = Shark(bite_strength = 50, health = 200, energy = 100)
 print(shark1.health, shark1.energy, shark1.bite_strength, sep = '\n')
 shark1.move(10)
 shark1.attack(20)
@@ -65,7 +65,7 @@ shark1.attack(20)
 #But we don't have anything related to the Fish parent class, hence the following code with give an error
 
 '''
-shark1 = Shark(50, 200, 100)
+shark1 = Shark(bite_strength = 50, health = 200, energy = 100)
 print(shark1.speed)
 '''
 
@@ -76,7 +76,7 @@ class Monster:
     def __init__(self, health, energy):
         self.health = health
         self.energy = energy
-        super.__init__()
+        super().__init__()
 '''
 
 #But we now run into the dilemma that how do we give the arguments of speed and has_scales, which are of the Fish class, from the Shark class when we call "super().__init__", via the Monster class

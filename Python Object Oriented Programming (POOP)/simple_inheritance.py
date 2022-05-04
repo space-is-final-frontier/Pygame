@@ -26,7 +26,7 @@ class Shark(Monster):
         print(f'The shark moved with speed {self.speed}')
 
 
-shark1 = Shark(120)
+shark1 = Shark(speed = 120)
 print(shark1.health, shark1.energy, shark1.speed, sep = '\n')
 shark1.attack(20)
 shark1.bite()
@@ -43,12 +43,15 @@ class Monster:
         self.energy = energy
         
     ...
+
 '''
     
 
 #Older Methord
 
 '''
+
+...
 class Shark(Monster):
     def __init__(self, speed, health, energy):
         Monster.__init__(self, health, energy)
@@ -56,7 +59,7 @@ class Shark(Monster):
         
     ...
     
-shark1 = Shark(120, 80, 240)
+shark1 = Shark(speed = 120, health = 80, energy = 240)
 print(shark1.health, shark1.energy, shark1.speed, sep = '\n')
 shark1.attack(20)
 shark1.bite()
@@ -76,7 +79,7 @@ class Shark(Monster):
         
     ...
     
-shark1 = Shark(120, 80, 240)
+shark1 = Shark(speed = 120, health = 80, energy = 240)
 print(shark1.health, shark1.energy, shark1.speed, sep = '\n')
 shark1.attack(20)
 shark1.bite()
@@ -111,7 +114,7 @@ class Shark(Monster):
         print('The shark has moved!')
         print(f'The shark moved with speed {self.speed}')
 
-shark1 = Shark(120, 80, 240)
+shark1 = Shark(speed = 120, health = 80, energy = 240)
 print(shark1.health, shark1.energy, shark1.speed, sep = '\n')
 shark1.attack(20)
 shark1.bite()

@@ -31,7 +31,7 @@ class Monster:
         self.health = health
         self.energy = energy
 
-monster1 = Monster(100, 50)
+monster1 = Monster(health = 100, energy = 50)
 update_health(20)
 print(monster.health)
 '''
@@ -53,8 +53,8 @@ class Hero:
     def attack(self):
         self.monster.get_damage(self.damage)
 
-monster1 = Monster(100)
-hero = Hero(20, monster1)
+monster1 = Monster(health = 100)
+hero = Hero(damage = 20, monster = monster1)
 
 hero.attack()
 print(monster1.health)
