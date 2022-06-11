@@ -41,6 +41,17 @@ def collisions(viking, imps_list):
 
                 game_active = False
 
+def vik_animation_walk():
+    global vik_surface, vik_walk_index
+
+    vik_walk_index += 0.11
+
+    if vik_walk_index >= len(vik_walk):
+
+        vik_walk_index = 0
+
+    vik_surface = vik_walk[int(vik_walk_index)]
+
 pygame.init()   #Initialising pygame
 
 #Global variables
@@ -58,16 +69,29 @@ sky_surface = pygame.image.load('Graphics/Sky.png').convert()    #Loading the va
 ground_surface = pygame.image.load('Graphics/Ground.png').convert()
 
 
-imp_surface = pygame.image.load('Graphics/Imp/ready_1_mod.png').convert_alpha()
-imp_surface = pygame.transform.flip(imp_surface, True, False)
-imp_surface = pygame.transform.scale(imp_surface, (54, 90))
-
+imp_frame_1 = pygame.transform.scale(pygame.transform.flip(pygame.image.load('Graphics/Imp/walk_1_mod.png').convert_alpha(), True, False), (54, 90))
+imp_frame_2 = pygame.transform.scale(pygame.transform.flip(pygame.image.load('Graphics/Imp/walk_2_mod.png').convert_alpha(), True, False), (54, 90))
+imp_frame_3 = pygame.transform.scale(pygame.transform.flip(pygame.image.load('Graphics/Imp/walk_3_mod.png').convert_alpha(), True, False), (54, 90))
+imp_frame_4 = pygame.transform.scale(pygame.transform.flip(pygame.image.load('Graphics/Imp/walk_4_mod.png').convert_alpha(), True, False), (54, 90))
+imp_frame_5 = pygame.transform.scale(pygame.transform.flip(pygame.image.load('Graphics/Imp/walk_5_mod.png').convert_alpha(), True, False), (54, 90))
+imp_frame_6 = pygame.transform.scale(pygame.transform.flip(pygame.image.load('Graphics/Imp/walk_6_mod.png').convert_alpha(), True, False), (54, 90))
+imp_frames = [imp_frame_1, imp_frame_2, imp_frame_3, imp_frame_4, imp_frame_5, imp_frame_6]
+imp_frame_index = 0
+imp_surface = imp_frames[imp_frame_index]
 
 imp_rect_list = []
 
 
-vik_surface = pygame.image.load('Graphics/Viking Axe/ready_1_mod.png').convert_alpha()
-vik_surface = pygame.transform.scale(vik_surface, (63, 90))
+vik_walk_1 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/walk_1_mod.png').convert_alpha(), (63, 90))
+vik_walk_2 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/walk_2_mod.png').convert_alpha(), (63, 90))
+vik_walk_3 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/walk_3_mod.png').convert_alpha(), (63, 90))
+vik_walk_4 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/walk_4_mod.png').convert_alpha(), (63, 90))
+vik_walk_5 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/walk_5_mod.png').convert_alpha(), (63, 90))
+vik_walk_6 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/walk_6_mod.png').convert_alpha(), (63, 90))
+vik_walk = [vik_walk_1, vik_walk_2, vik_walk_3, vik_walk_4, vik_walk_5, vik_walk_6]
+vik_walk_index = 0
+
+vik_surface = vik_walk[vik_walk_index]
 vik_rect = vik_surface.get_rect(bottomleft = (80, 300))
 vik_gravity = 0
 
@@ -86,28 +110,43 @@ instruct_rect = instruct.get_rect(center = (400, 350))
 obstacle_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(obstacle_timer, 1500)
 
+animation_timer = pygame.USEREVENT + 2
+pygame.time.set_timer(animation_timer, 166)
+
 
 while True:
     
     for event in pygame.event.get():
+        
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
 
         if game_active:
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if vik_rect.collidepoint(event.pos) and vik_rect.bottom >= 290:
-                    vik_gravity = -19
+                #if vik_rect.collidepoint(event.pos) and vik_rect.bottom >= 290:
+                #    vik_gravity = -14
+                pass
         
             if event.type == pygame.KEYDOWN:
-                if event.key in (pygame.K_SPACE, pygame.K_k, pygame.K_UP) and vik_rect.bottom >= 290:
-                    vik_gravity = -19
+                #if event.key in (pygame.K_SPACE, pygame.K_k, pygame.K_UP) and vik_rect.bottom >= 290:
+                #    vik_gravity = -9
 
-                if event.key in (pygame.K_SPACE, pygame.K_k, pygame.K_UP) and vik_rect.bottom < 200:
-                    vik_gravity -= 6
+                #if event.key in (pygame.K_SPACE, pygame.K_k, pygame.K_UP) and vik_rect.bottom < 200:
+                #    vik_gravity -= 2
+                pass
             
             if event.type == obstacle_timer:
                 imp_rect_list.append(imp_surface.get_rect(bottomleft = (randint(900, 1100), 300)))
+
+            if event.type == animation_timer:
+                imp_frame_index += 1
+                
+                if imp_frame_index >= len(imp_frames):
+                    imp_frame_index = 0
+
+                imp_surface = imp_frames[imp_frame_index]
+                
             
         else:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
@@ -116,6 +155,7 @@ while True:
 
 
     if game_active:
+
         #Placing the background and fps counter
         screen.blit(sky_surface, (0, 0))
         screen.blit(ground_surface, (0, 300))
@@ -134,14 +174,12 @@ while True:
         if vik_rect.bottom >= 300:
             vik_rect.bottom = 300
 
-        if vik_rect.top <= 0:
-            vik_rect.top = 0
-
+        vik_animation_walk()
         screen.blit(vik_surface, vik_rect)
 
 
         #Collisions
-        collisions(vik_rect, imp_rect_list)
+        #collisions(vik_rect, imp_rect_list)
 
 
     else:
