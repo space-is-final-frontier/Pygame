@@ -17,16 +17,6 @@ class Viking(pygame.sprite.Sprite):
         self.vik_walk = [vik_walk_1, vik_walk_2, vik_walk_3, vik_walk_4, vik_walk_5, vik_walk_6]
         self.vik_walk_index = 0
 
-        vik_attack_1 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/attack2_1_mod.png').convert_alpha(), (63, 90))
-        vik_attack_2 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/attack2_2_mod.png').convert_alpha(), (63, 99))
-        vik_attack_3 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/attack2_3_mod.png').convert_alpha(), (114, 90))
-        vik_attack_4 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/attack2_4_mod.png').convert_alpha(), (192, 90))
-        vik_attack_5 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/attack2_5_mod.png').convert_alpha(), (72, 87))
-        vik_attack_6 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/attack2_6_mod.png').convert_alpha(), (87, 90))
-
-        self.vik_attack = [vik_attack_1, vik_attack_2, vik_attack_3, vik_attack_4, vik_attack_5, vik_attack_6]
-        self.vik_attack_index = 0
-
         self.image = self.vik_walk[self.vik_walk_index]
         self.rect = self.image.get_rect(midbottom = (100, 300))
         self.gravity = 0
@@ -36,14 +26,6 @@ class Viking(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and self.rect.bottom >= 300:
             self.gravity = -20
-
-        '''
-        if keys[pygame.K_w] and self.rect.bottom >= 300 and self.timer <= 0:
-            self.attack_animation()
-
-        else:
-            self.animation()
-        '''
 
     def apply_gravity(self):
         self.gravity += 1
@@ -58,19 +40,10 @@ class Viking(pygame.sprite.Sprite):
         self.image = self.vik_walk[int(self.vik_walk_index)]
         self.rect = self.image.get_rect(center = (self.rect.centerx, self.rect.centery))
 
-    def attack_animation(self):
-        self.vik_attack_index += 0.15
-        if self.vik_attack_index >= len(self.vik_attack):
-            self.vik_attack_index = 0
-        self.image = self.vik_attack[int(self.vik_attack_index)]
-        self.rect = self.image.get_rect(center = (self.rect.centerx, self.rect.centery))
-        #self.timer = 120
-
     def update(self):
         self.viking_input()
         self.apply_gravity()
         self.animation()
-        #self.timer -= 1
 
 
 class Obstacle(pygame.sprite.Sprite):
