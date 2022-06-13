@@ -204,9 +204,6 @@ while True:
         imp_group.draw(screen)
         imp_group.update()
 
-        #Collisions
-        #collision_sprite()
-
     else:
         screen.fill((94, 129, 162))
         screen.blit(intro_vik, intro_vik_rect)
