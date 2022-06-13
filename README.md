@@ -2,4 +2,6 @@
 
 This is a small project that I'm making alongside Youtuber Clear Code's Pygame introduction video.
 
-Any criticism regarding how to optimise the code is appreciated
+This is now finished.
+
+All of the assets used are free to use
