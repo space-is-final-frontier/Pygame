@@ -20,13 +20,34 @@ class Viking(pygame.sprite.Sprite):
         self.image = self.vik_walk[self.vik_walk_index]
         self.rect = self.image.get_rect(midbottom = (100, 300))
         self.gravity = 0
-        self.timer = 120
+        
+        vik_attack_1 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/attack2_1_mod.png').convert_alpha(), (63, 90))
+        vik_attack_2 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/attack2_2_mod.png').convert_alpha(), (63, 99))
+        vik_attack_3 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/attack2_3_mod.png').convert_alpha(), (114, 90))
+        vik_attack_4 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/attack2_4_mod.png').convert_alpha(), (192, 90))
+        vik_attack_5 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/attack2_5_mod.png').convert_alpha(), (72, 87))
+        vik_attack_6 = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/attack2_6_mod.png').convert_alpha(), (87, 90))
+        
+        self.vik_attack = [vik_attack_1, vik_attack_2, vik_attack_3, vik_attack_4, vik_attack_5, vik_attack_6]
+        self.vik_attack_index = 0
+        self.attacking_completed = False
 
     def viking_input(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and self.rect.bottom >= 300:
             self.gravity = -20
 
+        if keys[pygame.K_w] and (self.rect.bottom >= 300) and not self.attacking_completed:
+            self.attack_animation()
+            self.attack()
+        
+        else:
+            self.animation()
+            self.collisions()
+            if self.attacking_completed and not keys[pygame.K_w]:
+                self.attacking_completed = False
+            self.vik_attack_index = 0
+            
     def apply_gravity(self):
         self.gravity += 1
         self.rect.y += self.gravity
@@ -34,16 +55,37 @@ class Viking(pygame.sprite.Sprite):
             self.rect.bottom = 300
 
     def animation(self):
-        self.vik_walk_index += 0.11
-        if self.vik_walk_index >= len(self.vik_walk):
-            self.vik_walk_index = 0
-        self.image = self.vik_walk[int(self.vik_walk_index)]
+        if self.rect.bottom < 300:
+            self.image = pygame.transform.scale(pygame.image.load('Graphics/Viking Axe/jump.png').convert_alpha(), (72, 96))
+            self.rect = self.image.get_rect(center = (self.rect.centerx, self.rect.centery))
+
+        else:
+            self.vik_walk_index += 0.12
+            if self.vik_walk_index >= len(self.vik_walk):
+                self.vik_walk_index = 0
+            self.image = self.vik_walk[int(self.vik_walk_index)]
+            self.rect = self.image.get_rect(center = (self.rect.centerx, self.rect.centery))
+
+    def attack_animation(self):
+        self.vik_attack_index += 0.14
+        if self.vik_attack_index >= len(self.vik_attack):
+            self.vik_attack_index = 0
+            self.attacking_completed = True
+        self.image = self.vik_attack[int(self.vik_attack_index)]
         self.rect = self.image.get_rect(center = (self.rect.centerx, self.rect.centery))
+
+    def attack(self):
+        pygame.sprite.spritecollide(viking.sprite, imp_group, True)
+
+    def collisions(self):
+        global game_active
+        if pygame.sprite.spritecollide(viking.sprite, imp_group, False):
+            imp_group.empty()
+            game_active = False
 
     def update(self):
         self.viking_input()
         self.apply_gravity()
-        self.animation()
 
 
 class Obstacle(pygame.sprite.Sprite):
@@ -109,7 +151,6 @@ text_font = pygame.font.Font('Font/Pixeltype.ttf', 45)  #Creating the font
 game_active = False
 start_time = 0
 score = 0
-attack_timer = 0
 
 #Groups
 viking = pygame.sprite.GroupSingle()
@@ -131,7 +172,7 @@ instruct_rect = instruct.get_rect(center = (400, 350))
 
 #Obstacles
 obstacle_timer = pygame.USEREVENT + 1
-pygame.time.set_timer(obstacle_timer, 1500)
+pygame.time.set_timer(obstacle_timer, 1300)
 
 while True: 
     for event in pygame.event.get():       
@@ -164,7 +205,7 @@ while True:
         imp_group.update()
 
         #Collisions
-        collision_sprite()
+        #collision_sprite()
 
     else:
         screen.fill((94, 129, 162))
